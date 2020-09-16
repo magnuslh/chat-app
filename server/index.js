@@ -128,6 +128,25 @@ async function clearMessages() {
   }
 }
 
+const adjectives = [
+  "Gullable",
+  "Amusing",
+  "Curious",
+  "Helpless",
+  "Cruel",
+  "Charming",
+  "Careful",
+  "Envious",
+  "Thoughtful",
+  "Gorgeous",
+  "Troubled",
+  "Confused",
+  "Gentle",
+  "Grumpy",
+  "Anxious",
+  "Arrogant",
+];
+
 const nicknames = [
   "Sulla",
   "Caesar",
@@ -152,12 +171,18 @@ const nickDict = {};
 io.on("connection", async (socket) => {
   console.log("User connected");
   let clientNames = Object.values(nickDict);
-  let nickname = nicknames[Math.floor(Math.random() * nicknames.length)];
+  let nickname =
+    adjectives[Math.floor(Math.random() * adjectives.length)] +
+    " " +
+    nicknames[Math.floor(Math.random() * nicknames.length)];
   while (
     clientNames.includes(nickname) &&
     clientNames.length < nicknames.length
   ) {
-    nickname = nicknames[Math.floor(Math.random() * nicknames.length)];
+    nickname =
+      adjectives[Math.floor(Math.random() * adjectives.length)] +
+      " " +
+      nicknames[Math.floor(Math.random() * nicknames.length)];
   }
   nickDict[socket.id] = nickname;
   clientNames = Object.values(nickDict);
@@ -176,6 +201,11 @@ io.on("connection", async (socket) => {
     let msg = await addMessage(message);
     io.emit("bcMessage", msg);
   });
+  // socket.on("writing", async (data) => {
+  //   console.log("writing");
+
+  //   socket.broadcast.emit("writing");
+  // });
 
   socket.on("disconnect", () => {
     delete nickDict[socket.id];
