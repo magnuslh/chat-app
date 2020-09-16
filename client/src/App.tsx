@@ -11,12 +11,12 @@ import {
 import Chat from "./components/Chat";
 import { Message } from "./types/types";
 
-const port = "9000";
+// const port = "9000";
 const io = require("socket.io-client");
-const socket = io("localhost:" + port);
+const socket = io("/");
 
 const link = createHttpLink({
-  uri: "http://localhost:" + port + "/graphql",
+  uri: "/graphql",
 });
 
 const client = new ApolloClient({

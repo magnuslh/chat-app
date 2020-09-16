@@ -4,7 +4,7 @@ const express = require("express");
 const path = require("path");
 var cors = require("cors");
 const { ApolloServer, gql } = require("apollo-server-express");
-
+const port = process.env.PORT || 9000;
 const app = express();
 app.use(cors());
 
@@ -101,7 +101,7 @@ const resolvers = {
 const server = new ApolloServer({ typeDefs, resolvers });
 server.applyMiddleware({ app });
 
-const http = app.listen({ port: "9000" }, () => {
+const http = app.listen(port, () => {
   console.log(`Server started at localhost:9000`);
 });
 
