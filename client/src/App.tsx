@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useStateWithCallbackLazy } from "use-state-with-callback";
+import "./app.css";
 import {
   ApolloClient,
   InMemoryCache,

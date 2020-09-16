@@ -65,7 +65,7 @@ const Chat = ({
     end.current!.scrollIntoView({ behavior: "smooth" });
   }, [messageElements]);
   return (
-    <div className="w-full h-screen bg-gray-500 flex flex-col justify-end">
+    <div className="w-full h-full bg-gray-500 flex flex-col justify-end">
       <Header clients={clients} />
       <div className="w-full h-full flex flex-col p-4 overflow-y-scroll">
         {messageElements.length > 0 ? (
