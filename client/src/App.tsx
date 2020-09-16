@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef, useCallback } from "react";
 import { useStateWithCallbackLazy } from "use-state-with-callback";
-import "./app.css";
+
 import {
   ApolloClient,
   InMemoryCache,
@@ -111,7 +111,7 @@ function App() {
   };
 
   return (
-    <div>
+    <div className="h-screen w-full">
       <Chat
         clients={clients}
         nickname={nickname}

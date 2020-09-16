@@ -65,9 +65,9 @@ const Chat = ({
     end.current!.scrollIntoView({ behavior: "smooth" });
   }, [messageElements]);
   return (
-    <div className="w-full h-full bg-gray-500 flex flex-col justify-end">
+    <div className="h-full w-full  bg-gray-500 flex flex-col justify-end">
       <Header clients={clients} />
-      <div className="w-full h-full flex flex-col p-4 overflow-y-scroll">
+      <div className="flex-grow flex flex-col p-4 overflow-y-scroll">
         {messageElements.length > 0 ? (
           <button className="text-gray-400" onClick={clearMessages}>
             Clear All

@@ -3,7 +3,9 @@ import ReactDOM from "react-dom";
 import "./assets/main.css";
 import App from "./App";
 import * as serviceWorker from "./serviceWorker";
-
+window.addEventListener("load", function () {
+  window.scrollTo(0, 0);
+});
 ReactDOM.render(
   <React.StrictMode>
     <App />
