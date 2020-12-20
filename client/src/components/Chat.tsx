@@ -10,10 +10,14 @@ interface ChatProps {
   clearMessages: () => void;
   nickname: string;
   clients: string[];
+  typers: string[];
+  sendTyping: (value: boolean) => void;
 }
 const Chat = ({
   sendMessage,
+  sendTyping,
   clearMessages,
+  typers,
   clients,
   nickname,
   messages,
@@ -76,10 +80,10 @@ const Chat = ({
           <span />
         )}
         {messageElements}
-        <div ref={end}></div>
+        <div ref={end}>{typers}</div>
       </div>
       {/*input*/}
-      <Input sendMessage={sendMessage}></Input>
+      <Input sendMessage={sendMessage} sendTyping={sendTyping}></Input>
     </div>
   );
 };

@@ -1,13 +1,7 @@
-import React, { useEffect, useState, useRef, useCallback } from "react";
+import React, { useEffect, useState } from "react";
 import { useStateWithCallbackLazy } from "use-state-with-callback";
-
-import {
-  ApolloClient,
-  InMemoryCache,
-  createHttpLink,
-  useQuery,
-  gql,
-} from "@apollo/client";
+import { GET_HISTORY, CLEAR_MESSAGES } from "./db/queries";
+import { ApolloClient, InMemoryCache, createHttpLink } from "@apollo/client";
 
 import Chat from "./components/Chat";
 import { Message } from "./types/types";
@@ -25,28 +19,11 @@ const client = new ApolloClient({
   cache: new InMemoryCache(),
 });
 
-const GET_HISTORY = gql`
-  query {
-    messages {
-      sender
-      text
-      createdAt
-      updatedAt
-    }
-  }
-`;
-
-const CLEAR_MESSAGES = gql`
-  mutation {
-    clearMessages {
-      success
-    }
-  }
-`;
-
 function App() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [clients, setClients] = useState<string[]>([]);
+
+  const [typers, setTypers] = useState<string[]>([]);
   const [nickname, setNickname] = useStateWithCallbackLazy<string>("");
 
   const clearMessages = async () => {
@@ -89,6 +66,9 @@ function App() {
         setClients(otherClients);
       }
     );
+    socket.on("typers", (typers: string[]) => {
+      setTypers(typers);
+    });
 
     return () => socket.disconnect();
   }, []);
@@ -109,6 +89,12 @@ function App() {
     };
     socket.emit("newMessage", message);
   };
+  const startTyping = () => {
+    socket.emit("typing");
+  };
+  const stopTyping = () => {
+    socket.emit("stoppedTyping");
+  };
 
   return (
     <div className="h-screen w-full">
@@ -116,8 +102,17 @@ function App() {
         clients={clients}
         nickname={nickname}
         messages={messages}
+        typers={typers}
         clearMessages={() => clearMessages()}
         sendMessage={(text: string) => sendMessage(text)}
+        sendTyping={(value: boolean) => {
+          console.log(value);
+          if (value) {
+            startTyping();
+          } else {
+            stopTyping();
+          }
+        }}
       />
     </div>
   );

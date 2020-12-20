@@ -5,7 +5,7 @@ interface HeaderProps {
 const Header = ({ clients }: HeaderProps) => {
   let connectedClients = "";
   if (clients.length === 0) {
-    connectedClients = "Looks you are the only one here";
+    connectedClients = "Looks like you are the only one here";
   } else {
     connectedClients = clients.join(", ");
   }
